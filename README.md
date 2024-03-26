@@ -7,3 +7,6 @@ Generate diagrams using Python. Helps with diagrams automation using AI. Support
 3. Run the `Generate` task.
 
 The output directory is called `diagrams`, this is where you will find the generated diagrams.
+
+## Creating Diagrams
+The Python scripts to generate the diagrams are under the `src` directory. To create a new diagram add the script in this directory and make sure you have the correct interpreter selected in VSCode by selecting `Python: Select Interpreter` from the Command Palette and selecting the interpreter `('venv':venv)`. Now you are ready to write your Python script to generate a diagram, simply run the `Generate` task.
