@@ -34,12 +34,13 @@ with Diagram(show=False,
         teams_doc = Custom("Microsoft Teams", "../assets/icons/teams.png")
         in_meeting_ext_doc = Custom("In-Meeting\r\nExtension", "../assets/icons/teams_extension.png")
         authentication_doc = Custom("Auth", "../assets/icons/authentication.png")
+        patient_join_doc = Custom("Patient Joins", "../assets/icons/patient.png")
         interpreter_request_doc = Custom("Interpreter\r\nRequest", "../assets/icons/request.png")
         cyracom_api_doc = Custom("CyraCom API", "../assets/icons/golang.png")
         interpreter_join_doc = Custom("Interpreter Joins", "../assets/icons/interpreter.png")
         consultation_doc = Custom("Conference", "../assets/icons/conference.png")
         
-        doctor >> teams_doc >> in_meeting_ext_doc >> authentication_doc >> interpreter_request_doc
+        doctor >> teams_doc >> in_meeting_ext_doc >> authentication_doc >> patient_join_doc >> interpreter_request_doc
         interpreter_request_doc >> cyracom_api_doc >> interpreter_join_doc >> consultation_doc
 
 diagram
