@@ -1,0 +1,23 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+        {
+            "label": "Prepare",
+            "detail": "Prepares the development environment.",
+            "type": "shell",
+            "command": "./scripts/prepare.sh",
+            "group": {
+                "kind": "build",
+            }
+        },
+        {
+            "label": "Generate",
+            "detail": "Runs tools and scripts to automatically generate diagrams, configuration and code.",
+            "type": "shell",
+            "command": "./scripts/generate.sh",
+            "group": {
+                "kind": "build",
+            }
+        }
+	]
+}
