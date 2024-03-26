@@ -1,8 +1,8 @@
 import os
 
 def generate_directory_structure(startpath, output_file, exclude_paths=None):
-    with open(output_file, 'w') as f:
-        for root, dirs, files in os.walk(startpath):
+    with open(output_file, 'w', encoding='utf-8') as f:
+        for root, _, files in os.walk(startpath):
             # Skip paths in the exclude list
             if exclude_paths and any(excluded in root for excluded in exclude_paths):
                 continue
@@ -14,9 +14,8 @@ def generate_directory_structure(startpath, output_file, exclude_paths=None):
             for file in files:
                 f.write(f"{subindent}{file}\n")
 
-# Define the list of paths to exclude
-exclude_paths = ['venv', '.git']
 
-startpath = '.'
-output_file = './docs/diagrams/directory_structure.txt'
-generate_directory_structure(startpath, output_file, exclude_paths)
+EXCLUDE_PATHS = ['venv', '.git']
+START_PATH = '.'
+OUTPUT_FILE = 'diagrams/directory_structure.txt'
+generate_directory_structure(START_PATH, OUTPUT_FILE, EXCLUDE_PATHS)
