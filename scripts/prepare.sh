@@ -1,7 +1,16 @@
 #!/bin/bash
 
+# Update package lists
 sudo apt-get update
-sudo apt-get install graphviz -y
+
+# Install Graphviz if not already installed
+if command -v dot >/dev/null 2>&1; then
+    echo "Graphviz is already installed."
+else
+    echo "Installing Graphviz..."
+    sudo apt-get install graphviz -y
+    echo "Graphviz installed successfully."
+fi
 
 # Check if the 'diagrams' directory exists
 if [ -d "diagrams" ]; then
@@ -21,5 +30,17 @@ else
     echo "Virtual environment 'venv' created successfully."
 fi
 
+# Activate the virtual environment
+source venv/bin/activate
+
 # Install Python dependencies
 pip install -r requirements.txt
+
+# Check if Mermaid CLI is installed
+if command -v mmdc >/dev/null 2>&1; then
+    echo "Mermaid CLI is already installed."
+else
+    echo "Installing Mermaid CLI..."
+    npm install -g @mermaid-js/mermaid-cli
+    echo "Mermaid CLI installed successfully."
+fi
