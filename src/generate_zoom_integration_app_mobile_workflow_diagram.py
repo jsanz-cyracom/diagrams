@@ -51,10 +51,15 @@ for out_format in ["svg", "png"]:
         interpreter = Custom("Interpreter", interpreter_icon)
 
         # Workflow starting with Mobile User
-        invisible_top >> Edge(label="Opens", **edge_attr) >> zoom_mobile_app
-        mobile_user >> Edge(label="Submits Request", style="solid", color="black", constraint="false", **edge_attr) >> zoom_integration_app
+        # Adjust "Opens" text placement
+        invisible_top >> Edge(xlabel="Opens", labeldistance="2.0", **edge_attr) >> zoom_mobile_app
+        # Adjust "Submits Request" text placement
+        mobile_user >> Edge(xlabel="Submits Request", labeldistance="2.0", style="solid", color="black", constraint="false", **edge_attr) >> zoom_integration_app
+        # Adjust "Displays Interface" text placement
+        zoom_integration_app >> Edge(xlabel="Displays Interface", labeldistance="2.0", style="dashed", color="blue", fontcolor="blue", **edge_attr) >> mobile_user
+
+        # Connect Zoom Mobile App to Zoom Integration App
         zoom_mobile_app >> Edge(label="", taillabel="Selects App", **edge_attr) >> zoom_integration_app
-        zoom_integration_app >> Edge(label="Displays Interface", style="dashed", color="blue", fontcolor="blue", **edge_attr) >> mobile_user
         zoom_integration_app >> Edge(label="Auth Request", **edge_attr) >> wso2
 
         # CyraCom Direct API Cluster
@@ -63,9 +68,10 @@ for out_format in ["svg", "png"]:
             with Cluster("Kubernetes Cluster", graph_attr={"ranksep": "1.0"}):  # Additional spacing in cluster
                 microservices = Custom("Microservices\n(Golang Services)", microservices_icon)
 
-            # Increased spacing for edges
+            # API Call workflow
             zoom_integration_app >> Edge(label="", xlabel="API Call", minlen="2", **edge_attr) >> api_gateway
             api_gateway >> Edge(label="", xlabel="Routes Request", minlen="2", **edge_attr) >> microservices
             microservices >> Edge(label="", xlabel="Assigns", minlen="2", **edge_attr) >> interpreter
 
-        interpreter >> Edge(label="Joins Meeting", minlen="2", **edge_attr) >> zoom_mobile_app
+        # Interpreter interaction
+        interpreter >> Edge(xlabel="Joins Meeting", minlen="2", **edge_attr) >> zoom_mobile_app
