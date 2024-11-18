@@ -7,8 +7,8 @@ graph_attr = {
     "fontname": "Arial",
     "dpi": "300",
     "bgcolor": "white",
-    "nodesep": "1.0",  # Increase separation between nodes
-    "ranksep": "1.0"   # Increase separation between ranks
+    "nodesep": "1.5",  # Increased separation between nodes
+    "ranksep": "1.5"   # Increased separation between ranks
 }
 
 # Node and edge attributes
@@ -40,7 +40,8 @@ for out_format in ["svg", "png"]:
         interpreter_icon = "../assets/icons/interpreter.png"
 
         # Create sub-cluster for Mobile User
-        with Cluster("User Actions", graph_attr={"rank": "same"}):
+        with Cluster("User Actions", graph_attr={"ranksep": "0.5"}):  # Slightly reduced for compactness
+            invisible_top = Custom("", "../assets/icons/empty.png")  # Invisible top node for better control
             mobile_user = Custom("Mobile User", mobile_user_icon)
 
         # Main Workflow Nodes
@@ -50,20 +51,21 @@ for out_format in ["svg", "png"]:
         interpreter = Custom("Interpreter", interpreter_icon)
 
         # Workflow starting with Mobile User
-        mobile_user >> Edge(label="Opens", **edge_attr) >> zoom_mobile_app
-        zoom_mobile_app >> Edge(label="Selects App", **edge_attr) >> zoom_integration_app
-        mobile_user >> Edge(label="Submits Request", style="solid", color="black", **edge_attr) >> zoom_integration_app
-        zoom_integration_app >> Edge(label="Displays Interface", style="dashed", color="blue", **edge_attr) >> mobile_user
+        invisible_top >> Edge(label="Opens", **edge_attr) >> zoom_mobile_app
+        mobile_user >> Edge(label="Submits Request", style="solid", color="black", constraint="false", **edge_attr) >> zoom_integration_app
+        zoom_mobile_app >> Edge(label="", taillabel="Selects App", **edge_attr) >> zoom_integration_app
+        zoom_integration_app >> Edge(label="Displays Interface", style="dashed", color="blue", fontcolor="blue", **edge_attr) >> mobile_user
         zoom_integration_app >> Edge(label="Auth Request", **edge_attr) >> wso2
 
         # CyraCom Direct API Cluster
-        with Cluster("CyraCom Direct API"):
+        with Cluster("CyraCom Direct API", graph_attr={"nodesep": "1.2"}):  # Increased separation
             api_gateway = Custom("API Gateway\n(Azure APIM)", api_gateway_icon)
-            with Cluster("Kubernetes Cluster"):
+            with Cluster("Kubernetes Cluster", graph_attr={"ranksep": "1.0"}):  # Additional spacing in cluster
                 microservices = Custom("Microservices\n(Golang Services)", microservices_icon)
 
-            # API Call workflow
-            zoom_integration_app >> Edge(label="API Call", **edge_attr) >> api_gateway >> Edge(label="Routes Request", **edge_attr) >> microservices
-            microservices >> Edge(label="Assigns", **edge_attr) >> interpreter
+            # Increased spacing for edges
+            zoom_integration_app >> Edge(label="", xlabel="API Call", minlen="2", **edge_attr) >> api_gateway
+            api_gateway >> Edge(label="", xlabel="Routes Request", minlen="2", **edge_attr) >> microservices
+            microservices >> Edge(label="", xlabel="Assigns", minlen="2", **edge_attr) >> interpreter
 
-        interpreter >> Edge(label="Joins Meeting", **edge_attr) >> zoom_mobile_app
+        interpreter >> Edge(label="Joins Meeting", minlen="2", **edge_attr) >> zoom_mobile_app
