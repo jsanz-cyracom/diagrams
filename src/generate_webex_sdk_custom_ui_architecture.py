@@ -5,12 +5,12 @@ with Diagram("",
              show=False,
              direction="LR",
              outformat="png",
-             filename="diagrams/webex_widget_architecture"):
+             filename="diagrams/webex_sdk_custom_ui_architecture"):
 
     # Define icon paths
     user_icon = "../assets/icons/user.png"
     nexus_app_icon = "../assets/icons/cyracom_nexus.png"
-    widget_icon = "../assets/icons/webex_meetings_widget.png"
+    custom_ui_icon = "../assets/icons/custom_web_ui.png"
     cisco_cloud_icon = "../assets/icons/webex_cloud.png"
     interpreter_icon = "../assets/icons/interpreter.png"
     ucce_icon = "../assets/icons/cisco_ucce.png"
@@ -19,7 +19,7 @@ with Diagram("",
     # Nodes
     user = Custom("User\n(Doctor/Nurse)", user_icon)
     nexus_app = Custom("CyraCom Nexus", nexus_app_icon)
-    widget = Custom("Webex Meetings Widget", widget_icon)
+    custom_ui = Custom("Custom UI\nwith Webex SDK", custom_ui_icon)
     cisco_cloud = Custom("Webex Cloud", cisco_cloud_icon)
     interpreter = Custom("Interpreter", interpreter_icon)
     ucce = Custom("Cisco UCCE", ucce_icon)
@@ -27,10 +27,10 @@ with Diagram("",
 
     # Diagram structure
     with Cluster("User Device"):
-        user >> Edge(label="Uses") >> nexus_app >> Edge(label="Embeds") >> widget
+        user >> Edge(label="Uses") >> nexus_app >> Edge(label="Implements") >> custom_ui
 
     # Connections
-    widget >> Edge(label="Connects to") >> cisco_cloud
+    custom_ui >> Edge(label="Connects to") >> cisco_cloud
     cisco_cloud >> Edge(label="Routes Call") >> interpreter
     interpreter >> Edge(label="Operates through") >> ucce
 
@@ -39,4 +39,4 @@ with Diagram("",
 
     # Data flows
     user >> Edge(label="Initiate Call") >> nexus_app
-    interpreter >> Edge(label="Video Stream") << widget
+    interpreter >> Edge(label="Video Stream") << custom_ui
