@@ -61,7 +61,7 @@ for out_format in ["svg", "png"]:
             with Cluster("Kubernetes Cluster"):
                 microservices = Custom("Microservices\n(Golang Services)", microservices_icon)
 
-            zoom_integration_app >> Edge(label="API Calls", **edge_attr) >> api_gateway >> Edge(label="Routes Request", **edge_attr) >> microservices
+            zoom_integration_app >> Edge(xlabel="API Calls", **edge_attr) >> api_gateway >> Edge(label="Routes Request", **edge_attr) >> microservices
             microservices >> Edge(label="Assigns", **edge_attr) >> interpreter
 
         # Interpreter interaction
