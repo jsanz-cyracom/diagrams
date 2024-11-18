@@ -51,7 +51,7 @@ png_output_file = 'diagrams/zoom_integration_app_interpreter_request_sequence.pn
 svg_command = f'mmdc -i {diagram_file} -o {svg_output_file} -t default'
 
 # Command to generate high-resolution PNG (scale factor increased)
-png_command = f'mmdc -i {diagram_file} -o {png_output_file} -t default --scale 2'
+png_command = f'mmdc -i {diagram_file} -o {png_output_file} -t default --scale 4'
 
 # Run the commands
 os.system(svg_command)

@@ -1,5 +1,3 @@
-# src/generate_zoom_integration_app_mobile_workflow_diagram.py
-
 from diagrams import Diagram, Cluster, Edge
 from diagrams.custom import Custom
 
@@ -8,7 +6,9 @@ graph_attr = {
     "fontsize": "16",
     "fontname": "Arial",
     "dpi": "300",
-    "bgcolor": "white"  # Changed from "transparent" to "white"
+    "bgcolor": "white",
+    "nodesep": "1.0",  # Increase separation between nodes
+    "ranksep": "1.0"   # Increase separation between ranks
 }
 
 # Node and edge attributes
@@ -23,9 +23,9 @@ edge_attr = {
 
 # Generate both SVG and PNG outputs
 for out_format in ["svg", "png"]:
-    with Diagram("User Workflow on Mobile Devices",
+    with Diagram("",
                  show=False,
-                 direction="LR",
+                 direction="LR",  # Left-to-right layout
                  outformat=out_format,
                  filename=f"diagrams/zoom_integration_app_mobile_workflow",
                  graph_attr=graph_attr):
@@ -38,20 +38,23 @@ for out_format in ["svg", "png"]:
         api_gateway_icon = "../assets/icons/api_gateway.png"
         microservices_icon = "../assets/icons/microservices.png"
         interpreter_icon = "../assets/icons/interpreter.png"
-        cyracom_direct_api_icon = "../assets/icons/cyracom_direct_api.png"
 
-        # Nodes
-        mobile_user = Custom("Mobile User", mobile_user_icon)
+        # Create sub-cluster for Mobile User
+        with Cluster("User Actions", graph_attr={"rank": "same"}):
+            mobile_user = Custom("Mobile User", mobile_user_icon)
+
+        # Main Workflow Nodes
         zoom_mobile_app = Custom("Zoom Mobile App", zoom_mobile_app_icon)
         zoom_integration_app = Custom("Zoom Integration App\n(Next.js)", zoom_integration_app_icon)
         wso2 = Custom("WSO2 Identity Server", wso2_icon)
         interpreter = Custom("Interpreter", interpreter_icon)
 
-        # Diagram structure with clusters
-        mobile_user >> Edge(label="Opens", **edge_attr) >> zoom_mobile_app >> Edge(label="Selects App", **edge_attr) >> zoom_integration_app
+        # Workflow starting with Mobile User
+        mobile_user >> Edge(label="Opens", **edge_attr) >> zoom_mobile_app
+        zoom_mobile_app >> Edge(label="Selects App", **edge_attr) >> zoom_integration_app
+        mobile_user >> Edge(label="Submits Request", style="solid", color="black", **edge_attr) >> zoom_integration_app
+        zoom_integration_app >> Edge(label="Displays Interface", style="dashed", color="blue", **edge_attr) >> mobile_user
         zoom_integration_app >> Edge(label="Auth Request", **edge_attr) >> wso2
-        mobile_user << Edge(label="Displays Interface", **edge_attr) << zoom_integration_app
-        mobile_user >> Edge(label="Submits Request", **edge_attr) >> zoom_integration_app
 
         # CyraCom Direct API Cluster
         with Cluster("CyraCom Direct API"):
@@ -59,6 +62,7 @@ for out_format in ["svg", "png"]:
             with Cluster("Kubernetes Cluster"):
                 microservices = Custom("Microservices\n(Golang Services)", microservices_icon)
 
+            # API Call workflow
             zoom_integration_app >> Edge(label="API Call", **edge_attr) >> api_gateway >> Edge(label="Routes Request", **edge_attr) >> microservices
             microservices >> Edge(label="Assigns", **edge_attr) >> interpreter
 

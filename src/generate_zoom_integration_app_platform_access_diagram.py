@@ -23,7 +23,7 @@ edge_attr = {
 
 # Generate both SVG and PNG outputs
 for out_format in ["svg", "png"]:
-    with Diagram("Access to Zoom Integration App from Various Platforms",
+    with Diagram("",
                  show=False,
                  direction="TB",
                  outformat=out_format,
@@ -51,17 +51,17 @@ for out_format in ["svg", "png"]:
         mobile_device = Custom("Mobile App", mobile_device_icon)
 
         # Define Zoom Client and Zoom Integration App
-        zoom_client = Custom("Zoom Client", zoom_client_icon)
+        zoom_app = Custom("Zoom App", zoom_client_icon)
         zoom_integration_app = Custom("Zoom Integration App", zoom_integration_app_icon)
         cyracom_direct_api = Custom("CyraCom Direct API", cyracom_direct_api_icon)
 
         # Connections to Zoom Client
-        desktop_user >> Edge(**edge_attr) >> desktop >> Edge(**edge_attr) >> zoom_client
-        web_user >> Edge(**edge_attr) >> web_browser >> Edge(**edge_attr) >> zoom_client
-        mobile_user >> Edge(**edge_attr) >> mobile_device >> Edge(**edge_attr) >> zoom_client
+        desktop_user >> Edge(**edge_attr) >> desktop >> Edge(**edge_attr) >> zoom_app
+        web_user >> Edge(**edge_attr) >> web_browser >> Edge(**edge_attr) >> zoom_app
+        mobile_user >> Edge(**edge_attr) >> mobile_device >> Edge(**edge_attr) >> zoom_app
 
         # Zoom Integration App
-        zoom_client >> Edge(label="Accesses", **edge_attr) >> zoom_integration_app
+        zoom_app >> Edge(label="Accesses", **edge_attr) >> zoom_integration_app
 
         # Indicate interaction with CyraCom Direct API
         zoom_integration_app >> Edge(label="Uses", style="dashed", **edge_attr) >> cyracom_direct_api
