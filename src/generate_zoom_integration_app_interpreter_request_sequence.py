@@ -1,5 +1,3 @@
-# src/generate_zoom_integration_app_interpreter_request_sequence.py
-
 import os
 
 # Define the diagram in Mermaid syntax with adjusted font sizes and styles
@@ -16,9 +14,9 @@ diagram_definition = """
 sequenceDiagram
     participant User
     participant ZoomClient
-    participant "Zoom Integration App" as ZoomIntegrationApp
+    participant ZoomIntegrationApp
     participant WSO2
-    participant "CyraCom Direct API" as CyraComDirectAPI
+    participant CyraComDirectAPI
     participant Microservices
     participant Interpreter
     participant ZoomMeeting
