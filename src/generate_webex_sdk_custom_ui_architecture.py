@@ -31,7 +31,7 @@ for out_format in output_formats:
 
         # Diagram structure
         with Cluster("User Device"):
-            user >> Edge(label="Uses") >> nexus_app >> Edge(label="Implements") >> custom_ui
+            user >> Edge(xlabel="Uses", tailport="s") >> nexus_app >> Edge(label="Implements") >> custom_ui
 
         # Connections
         custom_ui >> Edge(label="Connects to") >> cisco_cloud
@@ -42,5 +42,6 @@ for out_format in output_formats:
         nexus_app << Edge(label="Session Data") >> cyracom_api
 
         # Data flows
-        user >> Edge(label="Initiate Call") >> nexus_app
+        # Adjust "Initiate Call" line to start from the bottom of the user
+        user >> Edge(label="Initiate Call", labeldistance="2") >> nexus_app
         interpreter >> Edge(label="Video Stream") << custom_ui
