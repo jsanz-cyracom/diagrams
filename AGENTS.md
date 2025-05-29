@@ -17,3 +17,4 @@ Custom icons reside in `assets/icons/`. Use these paths when creating nodes in c
 ## Coding style
 * Python files use four-space indentation and a maximum line length of 250 characters (see `.pylintrc`).
 * Replace any comment beginning with `AII:` once its instruction is completed.
+* When creating a new pyhton script for a diagram make sure it goes under "src" and it follows the same naming convention as the other files.
