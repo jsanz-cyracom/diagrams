@@ -12,6 +12,8 @@ api_icon = f"{icons_path}api.png"
 database_icon = f"{icons_path}database.png"
 component_icon = f"{icons_path}component.png"
 placeholder_icon = f"{icons_path}placeholder.png"
+redis_icon = f"{icons_path}redis.png"
+otel_icon = f"{icons_path}otel.png"
 
 # Generate diagrams in both SVG and PNG formats
 for out_format in output_formats:
@@ -30,21 +32,21 @@ for out_format in output_formats:
         scheduler = Custom("Scheduler", component_icon)
         state_processor = Custom("StateProcessor", component_icon)
         helper = Custom("Helper", component_icon)
-        logger = Custom("Logger", placeholder_icon)
-        tracer = Custom("Tracer", placeholder_icon)
+        logger = Custom("Logger", component_icon)
+        tracer = Custom("Tracer", component_icon)
 
         # Plugins
         with Cluster("Plugins"):
-            plugin_ccs_api = Custom("PluginCcsApi", api_icon)
-            plugin_redis = Custom("PluginRedis", database_icon)
-            plugin_calabrio = Custom("PluginCalabrioRta", placeholder_icon)
+            plugin_ccs_api = Custom("PluginCcsApi", component_icon)
+            plugin_redis = Custom("PluginRedis", component_icon)
+            plugin_calabrio = Custom("PluginCalabrioRta", component_icon)
 
         # External systems
         with Cluster("External Systems"):
             ccs_manager_api = Custom("CCS Info Manager API", api_icon)
-            calabrio_rta = Custom("Calabrio RTA", placeholder_icon)
-            redis = Custom("Redis", database_icon)
-            otel_collector = Custom("OTel Collector", placeholder_icon)
+            calabrio_rta = Custom("Calabrio RTA API", api_icon)
+            redis = Custom("Redis", redis_icon)
+            otel_collector = Custom("OTel Collector", otel_icon)
 
         # Initialization flow
         main >> service >> http_server >> api
