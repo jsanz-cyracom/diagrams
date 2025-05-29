@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source venv/bin/activate
+
 for file in src/*.py; do
     python "$file" --format png
 done
