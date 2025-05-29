@@ -26,6 +26,7 @@ for out_format in output_formats:
         with Cluster("Kubernetes Cluster"):
             with Cluster("Pod: svc-ccs-calabrio-rta"):
                 rta_service = Custom("svc-ccs-calabrio-rta", service_icon)
+                redis_sidecar = Custom("Redis Sidecar", redis_icon)
                 otel_sidecar = Custom("OpenTelemetry Sidecar", sidecar_icon)
 
             config_map = Custom("ConfigMap", config_icon)
@@ -35,12 +36,11 @@ for out_format in output_formats:
             secret >> Edge(label="Secrets") >> rta_service
             config_map >> Edge(style="dashed") >> otel_sidecar
 
-        redis = Custom("Redis", redis_icon)
         info_manager = Custom("CCS Info Manager API", api_icon)
         calabrio_rta = Custom("Calabrio RTA API", api_icon)
         otel_collector = Custom("OpenTelemetry Collector", otel_icon)
 
-        rta_service >> redis
+        rta_service >> redis_sidecar
         rta_service >> info_manager
         rta_service >> calabrio_rta
         otel_sidecar >> otel_collector
