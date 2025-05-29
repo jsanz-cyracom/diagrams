@@ -1,5 +1,12 @@
 {
-    "image":"mcr.microsoft.com/devcontainers/universal:2",
+    "image": "mcr.microsoft.com/devcontainers/universal:2",
+    "mounts": [
+        "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/codespace/.ssh,type=bind,consistency=cached"
+    ],
+    "remoteEnv": {
+        "SSH_AUTH_SOCK": "/ssh-agent",
+        "GOPRIVATE": "github.com/CyraCom/*"
+    },
     "customizations": {
         "vscode": {
             "extensions": [
