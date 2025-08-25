@@ -16,20 +16,20 @@ sequenceDiagram
     participant CFE_Lite as CFE Lite
     participant MRB
     participant XMS
-    participant Twilio
+    participant Hydration_API as Propio Hydration API
     participant Interpreter
 
     Vonage->>CFE_Lite: SIP INVITE
     CFE_Lite->>MRB: Allocate media server
     MRB->>XMS: Select XMS node
     CFE_Lite-->>Vonage: 200 OK
-    CFE_Lite->>Twilio: Request interpreter
-    Twilio-->>CFE_Lite: Interpreter selected
+    CFE_Lite->>Hydration_API: Request interpreter
+    Hydration_API-->>CFE_Lite: Interpreter selected
     CFE_Lite->>XMS: Dial interpreter
     XMS->>Interpreter: Connect call
     Interpreter-->>XMS: Answer
     XMS-->>CFE_Lite: Media session established
-    CFE_Lite-->>Twilio: Status callbacks
+    CFE_Lite-->>Hydration_API: Status callbacks
 """
 
 os.makedirs('diagrams', exist_ok=True)
