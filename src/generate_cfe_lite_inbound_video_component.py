@@ -15,13 +15,13 @@ with Diagram(
     outformat=args.format,
     filename="diagrams/cfe_lite_inbound_video_component",
 ):
-    vonage = Custom("Vonage SIP\nInterconnect", "../assets/icons/placeholder.png")  # Placeholder icon
+    vonage = Custom("Vonage SIP\nInterconnect", "../assets/icons/vonage.png")
     cfe_lite = Custom("CFE Lite\nMicroservice", "../assets/icons/microservices.png")
     with Cluster("XMS Cluster (MRB)"):
-        mrb = Custom("MRB", "../assets/icons/placeholder.png")  # Placeholder icon
+        mrb = Custom("MRB", "../assets/icons/broker.png")
         xms_nodes = [
-            Custom("XMS 1", "../assets/icons/placeholder.png"),  # Placeholder icon
-            Custom("XMS 2", "../assets/icons/placeholder.png"),  # Placeholder icon
+            Custom("XMS 1", "../assets/icons/xms.png"),
+            Custom("XMS 2", "../assets/icons/xms.png"),
         ]
         mrb >> xms_nodes
     twilio = Custom("Twilio APIs", "../assets/icons/api.png")
