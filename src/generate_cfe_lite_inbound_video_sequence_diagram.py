@@ -21,15 +21,24 @@ sequenceDiagram
 
     Vonage->>CFE_Lite: SIP INVITE
     CFE_Lite->>MRB: Allocate media server
-    MRB->>XMS: Select XMS node
+    MRB-->>CFE_Lite: XMS node chosen
     CFE_Lite-->>Vonage: 200 OK
     CFE_Lite->>Hydration_API: Request interpreter
     Hydration_API-->>CFE_Lite: Interpreter selected
     CFE_Lite->>XMS: Dial interpreter
+    XMS-->>CFE_Lite: Ringing
     XMS->>Interpreter: Connect call
-    Interpreter-->>XMS: Answer
-    XMS-->>CFE_Lite: Media session established
-    CFE_Lite-->>Hydration_API: Status callbacks
+    alt Interpreter answers
+        Interpreter-->>XMS: Answer
+        XMS-->>CFE_Lite: Answer
+        XMS-->>CFE_Lite: Media session established
+    else Call failed
+        XMS-->>CFE_Lite: Failure
+    end
+    loop Status updates
+        XMS-->>CFE_Lite: Status update
+        CFE_Lite-->>Hydration_API: Status callbacks
+    end
 """
 
 os.makedirs('diagrams', exist_ok=True)
