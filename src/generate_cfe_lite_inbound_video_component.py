@@ -24,10 +24,10 @@ with Diagram(
             Custom("XMS 2", "../assets/icons/xms.png"),
         ]
         mrb >> xms_nodes
-    twilio = Custom("Twilio APIs", "../assets/icons/api.png")
+    hydration_api = Custom("Propio Hydration API", "../assets/icons/api.png")
     interpreter = Custom("Interpreter", "../assets/icons/interpreter.png")
 
     vonage >> cfe_lite >> mrb
     for xms in xms_nodes:
         xms >> interpreter
-    cfe_lite >> twilio >> interpreter
+    cfe_lite >> hydration_api >> interpreter
