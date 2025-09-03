@@ -15,6 +15,7 @@ with Diagram(
     outformat=args.format,
     filename="diagrams/cfe_lite_inbound_video_component",
 ):
+    users = Custom("Users", "../assets/icons/users.png")
     vonage = Custom("Vonage SIP\nInterconnect", "../assets/icons/vonage.png")
     cfe_lite = Custom("CFE Lite\nMicroservice", "../assets/icons/microservices.png")
     with Cluster("XMS Cluster (MRB)"):
@@ -27,7 +28,7 @@ with Diagram(
     hydration_api = Custom("Propio Hydration API", "../assets/icons/api.png")
     interpreter = Custom("Interpreter", "../assets/icons/interpreter.png")
 
-    vonage >> cfe_lite >> mrb
+    users >> vonage >> cfe_lite >> mrb
     for xms in xms_nodes:
         xms >> interpreter
     cfe_lite >> hydration_api >> interpreter
